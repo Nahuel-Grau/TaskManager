@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,28 +20,41 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function(){
-    return view('index');
+    $task= DB::table('tasks')->get();
+    return view('index', ['tasks'=>$task]);
 })->name('index.task');
+
+
 
 Route::get('/create', function(){
     return view('create');
 })->name('create.task');
 
+
+
+
+
 Route::get('/edit', function(){
     return view('edit');
 })->name('edit.task');
 
+//register
 Route::get('/register', function(){
     return view('auth/register');
 })->name('register');
+Route::post('/register',[ RegisterController::class, 'store'])->name('register.store');
 
-
-Route::post('/register',[ TaskController::class, 'store'])->name('register.store');
-
+//login - logout
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/logout', [logoutController::class, 'store'])->name('logout');
 
-//Auth::routes();
+//create 
+route::get('/create', [TaskController::class, 'index' ])->name('create.task');
+route::post('/create', [TaskController::class, 'store' ])->name('post.create.task');
+
+//delete
+route::post('/',[TaskController::class, 'destroy'])->name('delete');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

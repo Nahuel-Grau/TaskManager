@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('index');
+       return view('create');
     }
 
     /**
@@ -30,13 +30,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new User;
-        $post->name = $request->input('name');
-        $post->email = $request->input('email');
-        $post->password = $request->input('password');
+        $post = new Task;
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
         $post->save();
 
-        return view('index');
+        return redirect('/');
+
 
     }
 
@@ -67,8 +67,9 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        print_r($request);
+
     }
 }

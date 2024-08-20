@@ -6,7 +6,7 @@
         
          <div class="card">
          
-            <div class="card-body">
+            <div class="row">
                 <h4 class="card-title">Tareas</h4>
                 <div class=""role="group" aria-label="Basic checkbox toggle button group">
                     
@@ -15,13 +15,26 @@
                     <h2>selecciona la tarea que deseas eliminar o modificar</h2>
                     <br>
                         
-                        <form action="">
-
-                            <input type="checkbox"class="btn-check"id="btncheck1"autocomplete="off"/>
-                            <label class="btn btn-outline-primary" for="btncheck1">Primer tarea</label><br>
+                        <form method="POST" action="{{route('')}}">
+                            @foreach ($tasks as $task)
+                            <div class="row" >
+                                <div class="col-sm-6">
+                                    <div class="card" style="width: 12rem;">
+                                        <div class="card-body" >
+                                            <h3 class="card-title"> 
+                                                 <input type="checkbox"class="btn-check"id="{!!$task->id!!}"autocomplete="off"/> 
+                                                 <label class="btn btn-outline-primary" for="{!!$task->id!!}">{!! $task->title !!}</label> </h3>
+                                            <p class="card-text">{!! $task->description!!}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            @endforeach
+                          
                             <br>
 
-                            <a  role="button" type="submit"class="btn btn-primary danger">Eliminar</a>
+                            <button type="submit"class="btn btn-primary danger" >Eliminar</button>
                             <a  href="{{route('edit.task')}}"  role="button" type="submit"class="btn btn-primary">Modificar</button> </a>
                             
                         </form>

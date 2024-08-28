@@ -51,9 +51,14 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request,)
     {
-        //
+        $task = Task::find($request->id);
+        $task->title = $request->input('title');
+        $task->description = $request->input('description');
+        $task->save();
+
+        return redirect('/');
     }
 
     /**
@@ -67,9 +72,14 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($task)
     {
-        print_r($request);
+        $task = Task::findOrFail($task);
+        $task->delete();
+    
+        return redirect()->route('index.task')->with('success', 'Tarea eliminada exitosamente');
+    
+
 
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\TaskController;
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 /*
@@ -34,9 +35,6 @@ Route::get('/create', function(){
 
 
 
-Route::get('/edit', function(){
-    return view('edit');
-})->name('edit.task');
 
 //register
 Route::get('/register', function(){
@@ -54,7 +52,16 @@ route::get('/create', [TaskController::class, 'index' ])->name('create.task');
 route::post('/create', [TaskController::class, 'store' ])->name('post.create.task');
 
 //delete
-route::post('/',[TaskController::class, 'destroy'])->name('delete');
+Route::delete('/delete/{task}', [TaskController::class, 'destroy'])->name('delete');
+
+//edit
+Route::get('/edit/{task}', function($task){
+    $task = DB::table('tasks')->where('id', $task)->first();
+    
+    return view('edit',compact ('task'));
+
+    })->name('edit.task');
+Route::post('/edit/{task}', [TaskController::class, 'edit'])->name('edit');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

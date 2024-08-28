@@ -14,17 +14,21 @@
                  
                     <h2>selecciona la tarea que deseas eliminar o modificar</h2>
                     <br>
-                        
-                        <form method="POST" action="{{route('')}}">
-                            @foreach ($tasks as $task)
+                    
+                    @foreach ($tasks as $task)
+                        <form method="POST" action="{{Route('delete', $task->id)}}">
+                            @csrf 
+                            @method('delete')
                             <div class="row" >
                                 <div class="col-sm-6">
                                     <div class="card" style="width: 12rem;">
                                         <div class="card-body" >
                                             <h3 class="card-title"> 
-                                                 <input type="checkbox"class="btn-check"id="{!!$task->id!!}"autocomplete="off"/> 
-                                                 <label class="btn btn-outline-primary" for="{!!$task->id!!}">{!! $task->title !!}</label> </h3>
-                                            <p class="card-text">{!! $task->description!!}</p>
+                                             <p class="card-text">{!! $task->title!!}</p>
+                                             <p class="card-text">{!! $task->description!!}</p>
+                                            
+                                            <button type="submit"class="btn btn-danger" >Eliminar</button><br>
+                                            <a  href="{{route('edit.task',$task->id)}}"  role="button" type="submit"class="btn btn-primary">Modificar</button> </a>
                                         </div>
                                     </div>
                                 </div>
@@ -34,9 +38,8 @@
                           
                             <br>
 
-                            <button type="submit"class="btn btn-primary danger" >Eliminar</button>
-                            <a  href="{{route('edit.task')}}"  role="button" type="submit"class="btn btn-primary">Modificar</button> </a>
-                            
+
+                           
                         </form>
                        
                     

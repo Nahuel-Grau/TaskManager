@@ -51,14 +51,26 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request,)
+    public function edit(Request $request, $id)
     {
-        $task = Task::find($request->id);
-        $task->title = $request->input('title');
-        $task->description = $request->input('description');
+        // Buscar la tarea por ID
+        $task = Task::findOrFail($id);
+    
+        // Validar los datos de entrada
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+    
+        // Asignar los valores a la tarea
+        $task->title = $validatedData['title'];
+        $task->description = $validatedData['description'];
+    
+        // Guardar los cambios en la base de datos
         $task->save();
-
-        return redirect('/');
+    
+        // Redireccionar a la página principal o a otra ruta con un mensaje de éxito
+        return redirect('/')->with('success', 'Tarea actualizada correctamente.');
     }
 
     /**

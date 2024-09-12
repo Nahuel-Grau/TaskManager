@@ -14,8 +14,12 @@
                  
                     <h2>selecciona la tarea que deseas eliminar o modificar</h2>
                     <br>
-                    
-                    @foreach ($tasks as $task)
+                   
+                        @foreach ($userTask as $task)
+                
+                        
+                
+                 
                         <form method="POST" action="{{Route('delete', $task->id)}}">
                             @csrf 
                             @method('delete')
@@ -35,7 +39,7 @@
                             </div>
                             
                             @endforeach
-                          
+                            
                             <br>
 
 

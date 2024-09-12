@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Esto define la clave foránea y la relación con la tabla 'users'
             $table->timestamps();
             $table->string('title');
             $table->text('description');
